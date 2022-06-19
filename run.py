@@ -15,17 +15,16 @@ SHEET = GSPREAD_CLIENT.open('love_sandwiches')
 
 def get_sales_data():
     """
-    Get sales figures input from the user.
-    Run a while loop to collect a valid string of data from the user
-    via the terminal, which must be a string of 6 numbers separated
-    by commas. The loop will repeatedly request data, until it is valid.
+    Collect survey answers from the user.
+    Run a while loop to collect a valid string of answer from the user
+    via the terminal, which must be one of the multiple choice answers.
+    The loop will repeatedly request an answer, until it is valid.
     """
     while True:
-        print("Please enter sales data from the last market.")
-        print("Data should be six numbers, separated by commas.")
-        print("Example: 10,20,30,40,50,60\n")
+        print("Which form of transportation do you use most often when going to work?")
+        print("Choose one of the following: 'car' or 'bicycle' or 'public transport' or 'other'\n")
 
-        data_str = input("Enter your data here:\n")
+        data_str = input("Enter your answer here:\n")
 
         sales_data = data_str.split(",")
 
@@ -43,13 +42,12 @@ def validate_data(values):
     or if there aren't exactly 6 values.
     """
     try:
-        [int(value) for value in values]
-        if len(values) != 6:
+        if len(values) != 1:
             raise ValueError(
-                f"Exactly 6 values required, you provided {len(values)}"
+                f"Only one answer is required, you provided {len(values)}"
             )
     except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
+        print(f"Invalid answer: {e}, please try again.\n")
         return False
 
     return True
@@ -57,7 +55,7 @@ def validate_data(values):
 
 def update_worksheet(data, worksheet):
     """
-    Receives a list of integers to be inserted into a worksheet
+    Receives a list of answers to be inserted into a worksheet
     Update the relevant worksheet with the data provided
     """
     print(f"Updating {worksheet} worksheet...\n")
@@ -85,6 +83,9 @@ def calculate_surplus_data(sales_row):
 
     return surplus_data
 
+message = 'car, bicycle, car, bus, car'
+
+print('Car:', message.count('car'))
 
 def get_last_5_entries_sales():
     """
